@@ -17,6 +17,8 @@ import java.io.IOException;
 import java.io.PrintWriter;
 import java.io.Reader;
 import java.awt.event.ActionEvent;
+import javax.swing.JLabel;
+import javax.swing.JScrollPane;
 
 public class GUI {
 
@@ -50,39 +52,66 @@ public class GUI {
 	 */
 	private void initialize() {
 		frame = new JFrame();
-		frame.setBounds(100, 100, 655, 418);
+		frame.setBounds(100, 100, 625, 494);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		
-		JTextArea textAnalizar = new JTextArea();
-		
-		JTextArea textresultado = new JTextArea();
-		textresultado.setEditable(false);
-		
 		JButton btnAnalizar = new JButton("Analizar");
+		
+		JButton btnLimpiar = new JButton("Limpiar");
+		
+		
+		JButton btnLimpiar_1 = new JButton("Limpiar");
+		
+		JLabel lblAnalizadorLexicoPara = new JLabel("Analizador Lexico para c++");
+		
+		JScrollPane scrollPane = new JScrollPane();
+		
+		JScrollPane scrollPane_1 = new JScrollPane();
 		
 		GroupLayout groupLayout = new GroupLayout(frame.getContentPane());
 		groupLayout.setHorizontalGroup(
 			groupLayout.createParallelGroup(Alignment.LEADING)
 				.addGroup(groupLayout.createSequentialGroup()
-					.addGap(13)
-					.addComponent(textAnalizar, GroupLayout.PREFERRED_SIZE, 259, GroupLayout.PREFERRED_SIZE)
-					.addPreferredGap(ComponentPlacement.RELATED, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-					.addComponent(btnAnalizar)
-					.addPreferredGap(ComponentPlacement.RELATED)
-					.addComponent(textresultado, GroupLayout.PREFERRED_SIZE, 259, GroupLayout.PREFERRED_SIZE)
-					.addContainerGap())
+					.addGroup(groupLayout.createParallelGroup(Alignment.LEADING)
+						.addGroup(groupLayout.createSequentialGroup()
+							.addContainerGap()
+							.addGroup(groupLayout.createParallelGroup(Alignment.LEADING, false)
+								.addGroup(groupLayout.createSequentialGroup()
+									.addComponent(btnAnalizar)
+									.addPreferredGap(ComponentPlacement.RELATED, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+									.addComponent(btnLimpiar))
+								.addComponent(scrollPane, GroupLayout.PREFERRED_SIZE, 285, GroupLayout.PREFERRED_SIZE))
+							.addGap(36)
+							.addGroup(groupLayout.createParallelGroup(Alignment.TRAILING)
+								.addComponent(btnLimpiar_1, GroupLayout.PREFERRED_SIZE, 86, GroupLayout.PREFERRED_SIZE)
+								.addComponent(scrollPane_1, GroupLayout.PREFERRED_SIZE, 271, GroupLayout.PREFERRED_SIZE)))
+						.addGroup(groupLayout.createSequentialGroup()
+							.addGap(233)
+							.addComponent(lblAnalizadorLexicoPara)))
+					.addContainerGap(120, Short.MAX_VALUE))
 		);
 		groupLayout.setVerticalGroup(
 			groupLayout.createParallelGroup(Alignment.LEADING)
 				.addGroup(groupLayout.createSequentialGroup()
-					.addContainerGap()
-					.addGroup(groupLayout.createParallelGroup(Alignment.LEADING)
-						.addGroup(groupLayout.createParallelGroup(Alignment.BASELINE)
-							.addComponent(textAnalizar, GroupLayout.DEFAULT_SIZE, 243, Short.MAX_VALUE)
-							.addComponent(textresultado, GroupLayout.PREFERRED_SIZE, 361, GroupLayout.PREFERRED_SIZE))
-						.addComponent(btnAnalizar))
-					.addContainerGap())
+					.addGap(5)
+					.addComponent(lblAnalizadorLexicoPara)
+					.addPreferredGap(ComponentPlacement.UNRELATED)
+					.addGroup(groupLayout.createParallelGroup(Alignment.BASELINE)
+						.addComponent(btnAnalizar)
+						.addComponent(btnLimpiar)
+						.addComponent(btnLimpiar_1))
+					.addPreferredGap(ComponentPlacement.UNRELATED)
+					.addGroup(groupLayout.createParallelGroup(Alignment.LEADING, false)
+						.addComponent(scrollPane_1)
+						.addComponent(scrollPane, GroupLayout.DEFAULT_SIZE, 366, Short.MAX_VALUE))
+					.addContainerGap(26, Short.MAX_VALUE))
 		);
+		
+		JTextArea textresultado = new JTextArea();
+		scrollPane_1.setViewportView(textresultado);
+		
+		JTextArea textAnalizar = new JTextArea();
+		scrollPane.setViewportView(textAnalizar);
 		frame.getContentPane().setLayout(groupLayout);
 		
 		btnAnalizar.addActionListener(new ActionListener() {
@@ -107,11 +136,13 @@ public class GUI {
 					String resultado ="";//Sirve como resultado de toda la cadena que vamos a analizar
 					while(true) {
 						Tokens tokens = lexer.yylex();
+						//si ya no quedan tokens por analizar se scribira FIN
 						if(tokens == null) {
 							resultado += "FIN";
 							textresultado.setText(resultado);
 							return;
 						}
+						//utilizaremos un switch pra todoss tokens de nuestra clase Tokens estos se mostraran en el textresultado
 						switch(tokens) {
 							case ERROR:
 								resultado +="Simbolo no definido\n";
@@ -120,10 +151,28 @@ public class GUI {
 								resultado +="Funcion main .\n";
 								break;
 							case Keywrod:
-								resultado += lexer.lexeme + ": Es un " + tokens + ".\n";
+								resultado += lexer.lexeme + ": Es un keyword .\n";
 								break;
 							case Headers1:
 								resultado += lexer.lexeme + ": Es un " + "header" + ".\n";
+								break;
+							case Headers2:
+								resultado += lexer.lexeme + ": Es un " + "header" + ".\n";
+								break;
+							case Headers3:
+								resultado += lexer.lexeme + ": Es un " + "header" + ".\n";
+								break;
+							case Headers4:
+								resultado += lexer.lexeme + ": Es un " + "header" + ".\n";
+								break;
+							case Headers5:
+								resultado += lexer.lexeme + ": Es un " + "header" + ".\n";
+								break;
+							case Headers6:
+								resultado += lexer.lexeme + ": Es un " + "header" + ".\n";
+								break;
+							case Define:
+								resultado += lexer.lexeme + ": Instrucion define" + ".\n";
 								break;
 							case LlavedeApertura:
 								resultado += lexer.lexeme + ": Llave de Apertura.\n";
@@ -142,9 +191,6 @@ public class GUI {
 								break;
 							case CorchetesdeCerradura:
 								resultado += lexer.lexeme + ": Corchetes de Cerradura.\n";
-								break;
-							case Headers2:
-								resultado += lexer.lexeme + ": Es un " + "header" + ".\n";
 								break;
 							case VarInt:
 								resultado += lexer.lexeme + ": Es una VariableEntera.\n";
@@ -210,10 +256,28 @@ public class GUI {
 								resultado += lexer.lexeme + ": Es un Operador Logico.\n";
 								break;
 							case Identificador:
-								resultado += lexer.lexeme + ": Es un Operador Identificador.\n";
+								resultado += lexer.lexeme + ": Es un Identificador.\n";
 								break;
 							case Int:
 								resultado += lexer.lexeme + ": Es un Entero.\n";
+								break;
+							case Funcion:
+								resultado += lexer.lexeme + ": Es una Funcion.\n";
+								break;
+							case Lista:
+								resultado += lexer.lexeme + ": Es una Lista.\n";
+								break;
+							case Lista1:
+								resultado += lexer.lexeme + ": Es una Lista.\n";
+								break;
+							case Arrow:
+								resultado += lexer.lexeme + ": Operador arrow.\n";
+								break;
+							case Ampersand:
+								resultado += lexer.lexeme + ": Ampersand.\n";
+								break;
+							case Dot:
+								resultado += lexer.lexeme + ": Operador punto.\n";
 								break;
 							default:
 								resultado += "Token: " + tokens + ".\n";
@@ -232,5 +296,16 @@ public class GUI {
 				}
 			}
 		});
+		
+		btnLimpiar.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				textAnalizar.setText(null);	}
+		});
+		
+		btnLimpiar_1.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				textresultado.setText(null);	}
+		});
+		
 	}
 }
