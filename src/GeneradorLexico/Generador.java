@@ -8,7 +8,7 @@ public class Generador {
 		
 		//Para generar la clase lexer haremos uso de nuestro archivo .lex
 		String path = "/home/luisfelipe/javaprojects/AnalizadorLexico/src/GeneradorLexico/";
-		String archivo = path +"lexer.lex";
+		String archivo = path +"lexer1.lex";
 		File file = new File(archivo);
 		
 		//creamos la clase lexer con ayuda de la libreria Jflex

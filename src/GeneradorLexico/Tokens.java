@@ -47,4 +47,5 @@ public enum Tokens {
 	Funciones,
 	ERROR,
 	Int,
+	Escribir,
 }

@@ -1,8 +1,5 @@
-// Your First C++ Program
+//comentario
 
-#include <iostream>
 
-int main() {
-    cout << "Hello World";
-    return 0;
-}
+
+escribir("adas")

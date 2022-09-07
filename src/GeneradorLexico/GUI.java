@@ -62,7 +62,7 @@ public class GUI {
 		
 		JButton btnLimpiar_1 = new JButton("Limpiar");
 		
-		JLabel lblAnalizadorLexicoPara = new JLabel("Analizador Lexico para c++");
+		JLabel lblAnalizadorLexicoPara = new JLabel("BlindScript");
 		
 		JScrollPane scrollPane = new JScrollPane();
 		
@@ -278,6 +278,9 @@ public class GUI {
 								break;
 							case Dot:
 								resultado += lexer.lexeme + ": Operador punto.\n";
+								break;
+							case Escribir:
+								resultado += lexer.lexeme + ": Funcion escribir.\n";
 								break;
 							default:
 								resultado += "Token: " + tokens + ".\n";
